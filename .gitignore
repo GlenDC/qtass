@@ -15,3 +15,6 @@
 # Sublime Text 
 *.sublime-project
 *.sublime-workspace
+
+# Binaries
+/build/qtass
