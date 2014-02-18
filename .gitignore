@@ -1,20 +1,17 @@
-# Compiled Object files
+# Compiled files
 *.slo
 *.lo
 *.o
-
-# Compiled Dynamic libraries
 *.so
 *.dylib
-
-# Compiled Static libraries
 *.lai
 *.la
 *.a
+/build/qtass
 
-# Sublime Text 
+# Project files
 *.sublime-project
 *.sublime-workspace
 
-# Binaries
-/build/qtass
+# Generated files
+/build/Makefile
