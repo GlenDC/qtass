@@ -1,4 +1,7 @@
-#QT += widgets
+QT += core gui widgets
 
-#HEADERS       = ../src/*.h
+TARGET = qtass
+TEMPLATE = app
+
+HEADERS       = ../src/*.h
 SOURCES       = ../src/*.cpp
