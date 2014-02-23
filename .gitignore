@@ -7,12 +7,12 @@
 *.lai
 *.la
 *.a
-/build/qtass
+/build/qtass/qtass
 
 # Project files
 *.sublime-project
 *.sublime-workspace
 
 # Generated files
-/build/Makefile
+/build/**/Makefile
 moc_*.cpp
