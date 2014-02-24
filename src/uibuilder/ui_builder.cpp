@@ -40,6 +40,8 @@ void UiBuilder::init()
     luaopen_table(state);
     luaopen_string(state);
     luaopen_math(state);
+
+    lua_register(state, "emptyFunction", &UiBuilder::emptyFunction);
 }
 
 void UiBuilder::executeFile(const QString & filePath)
@@ -52,4 +54,10 @@ void UiBuilder::executeFile(const QString & filePath)
     {
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
     }
+}
+
+int UiBuilder::emptyFunction(lua_State * /*state*/)
+{
+    qDebug() << "emptyFunction() called.";
+    return 0;
 }

@@ -12,11 +12,11 @@ public:
     UiBuilder(QMainWindow *target);
     ~UiBuilder();
 
-
     void init();
     void executeFile(const QString & filePath);
 
 private:
+    static int emptyFunction(lua_State * state);
     QMainWindow * targetWindow;
     lua_State * state;
 };

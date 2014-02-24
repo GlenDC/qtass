@@ -8,6 +8,7 @@
 *.la
 *.a
 /build/qtass/qtass
+/build/uibuilder/uibuilder_test
 
 # Project files
 *.sublime-project
