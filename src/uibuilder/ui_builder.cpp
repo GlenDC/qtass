@@ -48,7 +48,7 @@ void UiBuilder::executeFile(const QString & filePath)
 
     int s = luaL_loadfile(state, filePath.toLatin1().constData());
 
-    if ( s==0 )
+    if(s==0)
     {
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
     }

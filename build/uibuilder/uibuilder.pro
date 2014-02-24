@@ -1,4 +1,5 @@
 QT += core gui widgets
+CONFIG += debug
 
 TARGET = uibuilder_test
 TEMPLATE = app
