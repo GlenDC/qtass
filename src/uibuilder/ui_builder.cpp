@@ -87,10 +87,9 @@ int UiBuilder::createPanel(lua_State * state)
     QWidget *panel = new QWidget(dock);
     QVBoxLayout *layout = new QVBoxLayout(dock);
 
+    dock->setTitleBarWidget(new QLabel(title));
     dock->setWidget(panel);
     panel->setLayout(layout);
-
-    layout->addWidget(new QLabel(title));
 
     uiBuilder.targetWindow->addDockWidget(Qt::LeftDockWidgetArea, dock);
 
