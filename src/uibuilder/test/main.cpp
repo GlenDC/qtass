@@ -8,6 +8,8 @@ int main(int argc, char *argv[])
     QMainWindow w;
     UiBuilder uiBuilder(&w);
 
+    w.setWindowTitle("UiBuilder test");
+
     uiBuilder.init();
 
     uiBuilder.executeFile("src/uibuilder/test/test.lua");

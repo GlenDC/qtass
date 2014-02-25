@@ -3,6 +3,7 @@
 
 #include <QString>
 class QMainWindow;
+class QWidget;
 class lua_State;
 
 class UiBuilder
@@ -16,7 +17,12 @@ public:
     void executeFile(const QString & filePath);
 
 private:
-    static int emptyFunction(lua_State * state);
+    static UiBuilder & getUiBuilder(lua_State * state);
+    static QWidget & getWidget(lua_State * state, const int argn);
+
+    static int createPanel(lua_State * state);
+    static int addButton(lua_State * state);
+
     QMainWindow * targetWindow;
     lua_State * state;
 };
