@@ -9,4 +9,4 @@ SOURCES       = ../../src/uibuilder/*.cpp ../../src/uibuilder/test/*.cpp
 
 LIBS += -llua
 
-QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++11
