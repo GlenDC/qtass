@@ -18,15 +18,15 @@ extern "C" {
 
 UiBuilder::UiBuilder()
     :
-    targetWindow(NULL),
-    state(NULL)
+    targetWindow(nullptr),
+    state(nullptr)
 {
 }
 
 UiBuilder::UiBuilder(QMainWindow * window)
     :
     targetWindow(window),
-    state(NULL)
+    state(nullptr)
 {
 }
 
