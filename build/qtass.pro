@@ -5,3 +5,5 @@ TEMPLATE = app
 
 HEADERS       = ../src/*.h
 SOURCES       = ../src/*.cpp
+
+QMAKE_CXXFLAGS += -std=c++11
