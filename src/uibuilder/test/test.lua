@@ -1,12 +1,7 @@
+local dock = create(DOCK,"MyDock")
 
-local panel1 = createPanel("Panel1")
+local button = create(BUTTON,"MyButton",dock)
 
-createPanel("Panel2")
+local frame = create(FRAME,"MyFrame",dock)
 
-local panel3 = createPanel("Panel3")
-
-addButton(panel1, "A button")
-
-for i=1,10 do
-    addButton(panel3, "Button"..i)
-end
+local label = create(LABEL,"MyLabel",frame)

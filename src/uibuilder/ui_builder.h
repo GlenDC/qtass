@@ -17,11 +17,18 @@ public:
     void executeFile(const QString & filePath);
 
 private:
+    enum WIDGET_TYPE
+    {
+        DOCK,
+        FRAME,
+        BUTTON,
+        LABEL
+    };
+
     static UiBuilder & getUiBuilder(lua_State * state);
     static QWidget & getWidget(lua_State * state, const int argn);
 
-    static int createPanel(lua_State * state);
-    static int addButton(lua_State * state);
+    static int create(lua_State * state);
 
     QMainWindow * targetWindow;
     lua_State * state;

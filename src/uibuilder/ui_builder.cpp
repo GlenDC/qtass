@@ -6,12 +6,15 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QFrame>
 
 extern "C" {
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
 }
+
+#define DECLARE_GLOBAL(x) lua_pushnumber(state, x); lua_setglobal(state, #x);
 
 UiBuilder::UiBuilder()
     :
@@ -45,11 +48,15 @@ void UiBuilder::init()
     luaopen_string(state);
     luaopen_math(state);
 
-    lua_register(state, "createPanel", &UiBuilder::createPanel);
-    lua_register(state, "addButton", &UiBuilder::addButton);
+    lua_register(state, "create", &UiBuilder::create);
 
     lua_pushlightuserdata(state, this);
     lua_setglobal(state,"this");
+
+    DECLARE_GLOBAL(DOCK);
+    DECLARE_GLOBAL(FRAME);
+    DECLARE_GLOBAL(BUTTON);
+    DECLARE_GLOBAL(LABEL);
 }
 
 void UiBuilder::executeFile(const QString & filePath)
@@ -78,32 +85,66 @@ QWidget & UiBuilder::getWidget(lua_State * state, const int argn)
     return * static_cast<QWidget*>(lua_touserdata(state, argn));
 }
 
-int UiBuilder::createPanel(lua_State * state)
+int UiBuilder::create(lua_State * state)
 {
     UiBuilder & uiBuilder = getUiBuilder(state);
-    const char * title = lua_tostring(state,1);
+    WIDGET_TYPE widget_type = static_cast<WIDGET_TYPE>(lua_tonumber(state,1));
+    const char *title = lua_tostring(state,2);
+    QWidget *parent = static_cast<QWidget*>(lua_touserdata(state,3));
+    QWidget *result;
 
-    QDockWidget *dock = new QDockWidget(uiBuilder.targetWindow);
-    QWidget *panel = new QWidget(dock);
-    QVBoxLayout *layout = new QVBoxLayout(dock);
+    switch(widget_type)
+    {
+        case DOCK:
+        {
+            QDockWidget *dock = new QDockWidget(uiBuilder.targetWindow);
+            result = new QWidget(dock);
+            QVBoxLayout *layout = new QVBoxLayout(dock);
 
-    dock->setTitleBarWidget(new QLabel(title));
-    dock->setWidget(panel);
-    panel->setLayout(layout);
+            dock->setTitleBarWidget(new QLabel(title));
+            dock->setWidget(result);
+            result->setLayout(layout);
 
-    uiBuilder.targetWindow->addDockWidget(Qt::LeftDockWidgetArea, dock);
+            uiBuilder.targetWindow->addDockWidget(Qt::LeftDockWidgetArea, dock);
 
-    lua_pushlightuserdata(state, panel);
+            if(parent)
+            {
+                qDebug() << "UiBuilder: DOCK <" << title << "> cannot have parent.";
+                parent = nullptr;
+            }
+        }
+        break;
+
+        case FRAME:
+        {
+            QFrame * frame = new QFrame();
+
+            frame->setFrameShape(QFrame::Panel);
+            frame->setLayout(new QVBoxLayout(frame));
+
+            result = frame;
+        }
+        break;
+
+        case BUTTON:
+        {
+            result = new QPushButton(title);
+        }
+        break;
+
+        case LABEL:
+        {
+            result = new QLabel(title);
+        }
+        break;
+    }
+
+    if(parent)
+    {
+        parent->layout()->addWidget(result);
+    }
+
+    lua_pushlightuserdata(state, result);
 
     return 1;
-}
-
-int UiBuilder::addButton(lua_State * state)
-{
-    QWidget & panel = getWidget(state, 1);
-    const char * title = lua_tostring(state,2);
-
-    panel.layout()->addWidget(new QPushButton(title));
-
-    return 0;
 }
