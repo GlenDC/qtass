@@ -7,3 +7,5 @@ HEADERS       = ../../src/qtass/*.h ../../src/uibuilder/*.h
 SOURCES       = ../../src/qtass/*.cpp ../../src/uibuilder/*.cpp
 
 LIBS += -llua
+
+QMAKE_CXXFLAGS += -std=c++0x
